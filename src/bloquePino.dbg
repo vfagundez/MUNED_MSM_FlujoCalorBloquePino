@@ -1,0 +1,597 @@
+
+================================================================
+===  FlexPDE Version 6.36s/W32  14:13:44 Jan  8 2015  © 1996-2014 PDE Solutions Inc.
+===  D:\Mis_Datos\A1_Educacion\B1_Universidad\C3_UNED\D1_Cuatrimestre_1\E4_MetodosDeSimulacionYModelado\Trabajo\BloquePino\src\bloquePino.pde 16:21:26 1/8/22
+================================================================
+    1| TITLE 'Bloque Pino' { Flujo de calor en un bloque Pino interior }
+    2| SELECT
+    3| errlim=1e-3 spectral_colors
+    4| VARIABLES temp
+    5| DEFINITIONS
+    6| Lx=0.1 Ly = 0.1 Cx = 0.01 Cy = 0.01 !Posiciones de
+    7| rcp = 1
+    8| kx = 0.15 !Conductividad termica en X
+    9| ky = 0.36 !Conductividad termica en Y
+   10| heat = 0
+   11| fluxd_x = -kx*dx(temp) fluxd_y=-ky*dy(temp)
+   12| fluxd=vector(fluxd_x,fluxd_y)
+   13| INITIAL VALUES
+   14| temp = 273
+   15| EQUATIONS
+   16| dx( fluxd_x)+ dy( fluxd_y)=0
+   17| BOUNDARIES
+   18| region 'dominio' {Define el dominio del problema}
+   19| START (-Lx,Ly) NATURAL(temp) = 0
+   20| LINE TO (-Lx,-Ly) VALUE(temp) = 300
+   21| LINE TO (Lx, -Ly) NATURAL(temp) = 0
+   22| LINE TO (Lx, Ly) NATURAL(temp)= 0 LINE TO CLOSE
+   23| START(-Cx,Ly) LINE TO (Cx,Ly) {Region excluida}
+   24| VALUE(temp) =500 LINE TO CLOSE
+   25| TIME FROM 0 TO 5 by 0.05
+   26| PLOTS
+   27| FOR T = 5
+   28| CONTOUR(temp)
+   29| VECTOR(fluxd)
+   30| end
+   31| END
+
+SUMMARIZE 12 PARAMETERS (NO COMMON SUBEXPRESSION ELIMINATION)
+   Param         Compartment       Complexity     Memory
+--------------------------------------------------------------
+         ERRLIM      0                    1         56
+             LX      0                    1         56
+             LY      0                    1         56
+             CX      0                    1         56
+             CY      0                    1         56
+            RCP      0                    1         56
+             KX      0                    1         56
+             KY      0                    1         56
+           HEAT      0                    1         56
+        FLUXD_X      0                    4        224
+        FLUXD_Y      0                    4        224
+          FLUXD      0                   10        560
+
+SUMMARIZE EQUATIONS
+
+                                                    BASE         CSE
+ EQUATION  COMPARTMENT              FUNCTION     COMPLEXITY  COMPLEXITY    MEMORY
+----------------------------------------------------------------------------------
+     1          1                     Source          1            2          112
+     1          1                   Galerkin          9            9          504
+     1          1       Var  1      Jacobian          9            9          504
+     1          1              Surf Galerkin         10           10          560
+     1          1       Var  1 Surf Jacobian         10            9          504
+
+EQUATION 1 PARAMETER DEPENDENCIES:
+ KX              KY              FLUXD_X         FLUXD_Y        
+
+SUMMARIZE BOUNDARY CONDITIONS
+
+    BC     COMPARTMENT              FUNCTION     COMPLEXITY    MEMORY
+----------------------------------------------------------------------
+     1          1              Surf Galerkin          1         56
+     1          1       Var  1 Surf Jacobian          1         56
+     2          1              Surf Galerkin          1         56
+     2          1       Var  1 Surf Jacobian          1         56
+     3          1              Surf Galerkin          1         56
+     3          1       Var  1 Surf Jacobian          1         56
+
+SUMMARIZE PLOT EQUATIONS
+
+                                     BASE        CSE
+   PLOT    ARGUMENT COMPARTMENT  COMPLEXITY  COMPLEXITY    MEMORY
+------------------------------------------------------------------
+     1          1          1          1          1           56
+     2          1          1         10         10          560
+
+==UNUSED== PARAMETER DEFINITIONS:
+ ERRLIM          CY              RCP             HEAT           
+
+Orthomin/DInv ITERATION 81, RNORM=0.000840727, XNORM=100.825, 0 MS/IT 0.0151481 uS/NODE
+EQSET 1 PASS 1 DNORM=0.777076  Var NORMS:  0.777076
+Orthomin/DInv ITERATION 81, RNORM=0.000388747, XNORM=50.4125, 0 MS/IT 0.0302961 uS/NODE
+EQSET 1 PASS 1 DNORM=0.388538  Var NORMS:  0.388538
+Orthomin/DInv ITERATION 66, RNORM=6.9175e-007, XNORM=0.0447343, 0 MS/IT 0.0371816 uS/NODE
+EQSET 1 PASS 1 DNORM=0.000420348  Var NORMS:  4.203e-4
+RMS Spatial Errors  9.040e-5
+
+CYCLE 3 TIME (0.1,0.15), DT=0.05, 645 NODES, 294 CELLS
+Orthomin/DInv ITERATION 88, RNORM=1.1484e-008, XNORM=0.00315648, 0 MS/IT 0.017618 uS/NODE
+EQSET 1 PASS 1 DNORM=0.000190835  Var NORMS:  1.908e-4
+RMS Time Errors 0.000000
+RMS Spatial Errors  8.355e-5
+
+CYCLE 4 TIME (0.15,0.206101), DT=0.0561009, 630 NODES, 291 CELLS
+Orthomin/DInv ITERATION 94, RNORM=1.16507e-006, XNORM=0.352476, 0 MS/IT 0.0168862 uS/NODE
+EQSET 1 PASS 1 DNORM=0.0103888  Var NORMS:  0.010389
+RMS Time Errors 0.000000
+RMS Spatial Errors  2.153e-5
+
+CYCLE 5 TIME (0.206101,0.269047), DT=0.0629463, 642 NODES, 297 CELLS
+Orthomin/DInv ITERATION 96, RNORM=7.68708e-007, XNORM=0.246516, 0 MS/IT 0.0162253 uS/NODE
+EQSET 1 PASS 1 DNORM=0.00741853  Var NORMS:  0.007419
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.689e-5
+
+CYCLE 6 TIME (0.269047,0.339674), DT=0.0706269, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=2.59199e-007, XNORM=0.139509, 0 MS/IT 0.0153511 uS/NODE
+EQSET 1 PASS 1 DNORM=0.0032766  Var NORMS:  0.003277
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 7 TIME (0.339674,0.418919), DT=0.0792447, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 75, RNORM=5.19642e-011, XNORM=4.90713e-006, 0 MS/IT 0.0202634 uS/NODE
+EQSET 1 PASS 1 DNORM=4.97501e-008  Var NORMS:  4.975e-8
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 8 TIME (0.418919,0.507833), DT=0.088914, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 89, RNORM=6.24861e-015, XNORM=5.41807e-009, 0 MS/IT 0.0170759 uS/NODE
+EQSET 1 PASS 1 DNORM=3.67656e-011  Var NORMS:  3.68e-11
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 9 TIME (0.507833,0.607596), DT=0.0997631, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 67, RNORM=2.27283e-018, XNORM=1.4684e-013, 0 MS/IT 0.0226829 uS/NODE
+EQSET 1 PASS 1 DNORM=1.16088e-015  Var NORMS:  1.16e-15
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 10 TIME (0.607596,0.719532), DT=0.111936, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 88, RNORM=3.71281e-019, XNORM=3.2453e-014, 0 MS/IT 0.01727 uS/NODE
+EQSET 1 PASS 1 DNORM=4.07755e-016  Var NORMS:  4.08e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 11 TIME (0.719532,0.845126), DT=0.125594, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=8.3091e-020, XNORM=2.38387e-014, 0 MS/IT 0.0158308 uS/NODE
+EQSET 1 PASS 1 DNORM=2.45751e-016  Var NORMS:  2.46e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 12 TIME (0.845126,0.986045), DT=0.140919, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 85, RNORM=2.0286e-019, XNORM=2.24009e-014, 0 MS/IT 0.0178795 uS/NODE
+EQSET 1 PASS 1 DNORM=2.48651e-016  Var NORMS:  2.49e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 13 TIME (0.986045,1.14416), DT=0.158114, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=4.65862e-020, XNORM=2.45647e-014, 0 MS/IT 0.0307022 uS/NODE
+EQSET 1 PASS 1 DNORM=2.51734e-016  Var NORMS:  2.52e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 14 TIME (1.14416,1.32157), DT=0.177407, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=2.97276e-020, XNORM=2.26693e-014, 0 MS/IT 0.0307022 uS/NODE
+EQSET 1 PASS 1 DNORM=2.36115e-016  Var NORMS:  2.36e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 15 TIME (1.32157,1.52062), DT=0.199054, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 92, RNORM=6.86175e-020, XNORM=2.2048e-014, 0 MS/IT 0.0330382 uS/NODE
+EQSET 1 PASS 1 DNORM=3.6142e-016  Var NORMS:  3.61e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 16 TIME (1.52062,1.74396), DT=0.223342, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 97, RNORM=9.41392e-020, XNORM=2.26816e-014, 0 MS/IT 0.0156676 uS/NODE
+EQSET 1 PASS 1 DNORM=2.51674e-016  Var NORMS:  2.52e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 17 TIME (1.74396,1.99455), DT=0.250594, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 97, RNORM=4.83328e-020, XNORM=2.70841e-014, 0 MS/IT 0.0156676 uS/NODE
+EQSET 1 PASS 1 DNORM=3.03022e-016  Var NORMS:  3.03e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 18 TIME (1.99455,2.27573), DT=0.281171, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=1.33939e-019, XNORM=2.72278e-014, 0 MS/IT 0.0158308 uS/NODE
+EQSET 1 PASS 1 DNORM=2.81491e-016  Var NORMS:  2.81e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 19 TIME (2.27573,2.5912), DT=0.315479, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=1.30122e-019, XNORM=2.58675e-014, 0 MS/IT 0.0158308 uS/NODE
+EQSET 1 PASS 1 DNORM=2.9255e-016  Var NORMS:  2.93e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 20 TIME (2.5912,2.94518), DT=0.353973, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=4.8312e-020, XNORM=2.28945e-014, 0 MS/IT 0.0155077 uS/NODE
+EQSET 1 PASS 1 DNORM=2.29018e-016  Var NORMS:  2.29e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 21 TIME (2.94518,3.34234), DT=0.397164, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 87, RNORM=1.4416e-019, XNORM=2.52676e-014, 0 MS/IT 0.0349369 uS/NODE
+EQSET 1 PASS 1 DNORM=2.5059e-016  Var NORMS:  2.51e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 22 TIME (3.34234,3.78797), DT=0.445625, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=9.64092e-020, XNORM=2.66699e-014, 0 MS/IT 0.0155077 uS/NODE
+EQSET 1 PASS 1 DNORM=2.88011e-016  Var NORMS:  2.88e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 23 TIME (3.78797,4.28797), DT=0.5, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=5.68258e-020, XNORM=2.71782e-014, 0 MS/IT 0.0158308 uS/NODE
+EQSET 1 PASS 1 DNORM=2.89746e-016  Var NORMS:  2.90e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 24 TIME (4.28797,4.84898), DT=0.561009, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 101, RNORM=5.81345e-020, XNORM=2.80501e-014, 0 MS/IT 0.0150471 uS/NODE
+EQSET 1 PASS 1 DNORM=3.79907e-016  Var NORMS:  3.80e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 25 TIME (4.84898,5), DT=0.151024, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=1.45801e-019, XNORM=2.74554e-014, 0 MS/IT 0.0155077 uS/NODE
+EQSET 1 PASS 1 DNORM=3.50919e-016  Var NORMS:  3.51e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+DO_NEXTSTAGE pde 03617DD8  MAXSTAGE=0
+
+================================================================
+===  FlexPDE Version 6.36s/W32  14:13:44 Jan  8 2015  © 1996-2014 PDE Solutions Inc.
+===  D:\Mis_Datos\A1_Educacion\B1_Universidad\C3_UNED\D1_Cuatrimestre_1\E4_MetodosDeSimulacionYModelado\Trabajo\BloquePino\src\bloquePino.pde 16:26:30 1/8/22
+================================================================
+    1| TITLE 'Bloque Pino' { Flujo de calor en un bloque Pino interior }
+    2| SELECT
+    3| errlim=1e-3 spectral_colors
+    4| VARIABLES temp
+    5| DEFINITIONS
+    6| Lx=0.1 Ly = 0.1 Cx = 0.01 Cy = 0.01 !Posiciones de
+    7| rcp = 1
+    8| kx = 0.15 !Conductividad termica en X
+    9| ky = 0.36 !Conductividad termica en Y
+   10| heat = 0
+   11| fluxd_x = -kx*dx(temp) fluxd_y=-ky*dy(temp)
+   12| fluxd=vector(fluxd_x,fluxd_y)
+   13| INITIAL VALUES
+   14| temp = 273
+   15| EQUATIONS
+   16| dx( fluxd_x)+ dy( fluxd_y)=0
+   17| BOUNDARIES
+   18| region 'dominio' {Define el dominio del problema}
+   19| START (-Lx,Ly) NATURAL(temp) = 0
+   20| LINE TO (-Lx,-Ly) VALUE(temp) = 300
+   21| LINE TO (Lx, -Ly) NATURAL(temp) = 0
+   22| LINE TO (Lx, Ly) NATURAL(temp)= 0 LINE TO CLOSE
+   23| START(-Cx,Ly) LINE TO (Cx,Ly) {Region excluida}
+   24| VALUE(temp) =500 LINE TO CLOSE
+   25| TIME FROM 0 TO 5 by 0.05
+   26| PLOTS
+   27| CONTOUR(temp)
+***** Line 27 Col 8:
+No Plot Time Specified
+
+================================================================
+===  FlexPDE Version 6.36s/W32  14:13:44 Jan  8 2015  © 1996-2014 PDE Solutions Inc.
+===  D:\Mis_Datos\A1_Educacion\B1_Universidad\C3_UNED\D1_Cuatrimestre_1\E4_MetodosDeSimulacionYModelado\Trabajo\BloquePino\src\bloquePino.pde 16:27:21 1/8/22
+================================================================
+    1| TITLE 'Bloque Pino' { Flujo de calor en un bloque Pino interior }
+    2| SELECT
+    3| errlim=1e-3 spectral_colors
+    4| VARIABLES temp
+    5| DEFINITIONS
+    6| Lx=0.1 Ly = 0.1 Cx = 0.01 Cy = 0.01 !Posiciones de
+    7| kx = 0.15 !Conductividad termica en X
+    8| ky = 0.36 !Conductividad termica en Y
+    9| fluxd_x = -kx*dx(temp) fluxd_y=-ky*dy(temp)
+   10| fluxd=vector(fluxd_x,fluxd_y)
+   11| INITIAL VALUES
+   12| temp = 273
+   13| EQUATIONS
+   14| dx( fluxd_x)+ dy( fluxd_y)=0
+   15| BOUNDARIES
+   16| region 'dominio' {Define el dominio del problema}
+   17| START (-Lx,Ly) NATURAL(temp) = 0
+   18| LINE TO (-Lx,-Ly) VALUE(temp) = 300
+   19| LINE TO (Lx, -Ly) NATURAL(temp) = 0
+   20| LINE TO (Lx, Ly) NATURAL(temp)= 0 LINE TO CLOSE
+   21| START(-Cx,Ly) LINE TO (Cx,Ly) {Region excluida}
+   22| VALUE(temp) =500 LINE TO CLOSE
+   23| TIME FROM 0 TO 5 by 0.05
+   24| PLOTS
+   25| FOR T = 5
+   26| CONTOUR(temp)
+   27| VECTOR(fluxd)
+   28| end
+   29| END
+
+SUMMARIZE 10 PARAMETERS (NO COMMON SUBEXPRESSION ELIMINATION)
+   Param         Compartment       Complexity     Memory
+--------------------------------------------------------------
+         ERRLIM      0                    1         56
+             LX      0                    1         56
+             LY      0                    1         56
+             CX      0                    1         56
+             CY      0                    1         56
+             KX      0                    1         56
+             KY      0                    1         56
+        FLUXD_X      0                    4        224
+        FLUXD_Y      0                    4        224
+          FLUXD      0                   10        560
+
+SUMMARIZE EQUATIONS
+
+                                                    BASE         CSE
+ EQUATION  COMPARTMENT              FUNCTION     COMPLEXITY  COMPLEXITY    MEMORY
+----------------------------------------------------------------------------------
+     1          1                     Source          1            2          112
+     1          1                   Galerkin          9            9          504
+     1          1       Var  1      Jacobian          9            9          504
+     1          1              Surf Galerkin         10           10          560
+     1          1       Var  1 Surf Jacobian         10            9          504
+
+EQUATION 1 PARAMETER DEPENDENCIES:
+ KX              KY              FLUXD_X         FLUXD_Y        
+
+SUMMARIZE BOUNDARY CONDITIONS
+
+    BC     COMPARTMENT              FUNCTION     COMPLEXITY    MEMORY
+----------------------------------------------------------------------
+     1          1              Surf Galerkin          1         56
+     1          1       Var  1 Surf Jacobian          1         56
+     2          1              Surf Galerkin          1         56
+     2          1       Var  1 Surf Jacobian          1         56
+     3          1              Surf Galerkin          1         56
+     3          1       Var  1 Surf Jacobian          1         56
+
+SUMMARIZE PLOT EQUATIONS
+
+                                     BASE        CSE
+   PLOT    ARGUMENT COMPARTMENT  COMPLEXITY  COMPLEXITY    MEMORY
+------------------------------------------------------------------
+     1          1          1          1          1           56
+     2          1          1         10         10          560
+
+==UNUSED== PARAMETER DEFINITIONS:
+ ERRLIM          CY             
+
+Orthomin/DInv ITERATION 81, RNORM=0.000840727, XNORM=100.825, 0 MS/IT 0.0454442 uS/NODE
+EQSET 1 PASS 1 DNORM=0.777076  Var NORMS:  0.777076
+Orthomin/DInv ITERATION 81, RNORM=0.000388747, XNORM=50.4125, 0 MS/IT 0.0302961 uS/NODE
+EQSET 1 PASS 1 DNORM=0.388538  Var NORMS:  0.388538
+Orthomin/DInv ITERATION 66, RNORM=6.9175e-007, XNORM=0.0447343, 0 MS/IT 0.0371816 uS/NODE
+EQSET 1 PASS 1 DNORM=0.000420348  Var NORMS:  4.203e-4
+RMS Spatial Errors  9.040e-5
+
+CYCLE 3 TIME (0.1,0.15), DT=0.05, 645 NODES, 294 CELLS
+Orthomin/DInv ITERATION 88, RNORM=1.1484e-008, XNORM=0.00315648, 0 MS/IT 0.0528541 uS/NODE
+EQSET 1 PASS 1 DNORM=0.000190835  Var NORMS:  1.908e-4
+RMS Time Errors 0.000000
+RMS Spatial Errors  8.355e-5
+
+CYCLE 4 TIME (0.15,0.206101), DT=0.0561009, 630 NODES, 291 CELLS
+Orthomin/DInv ITERATION 94, RNORM=1.16507e-006, XNORM=0.352476, 0 MS/IT 0.0337724 uS/NODE
+EQSET 1 PASS 1 DNORM=0.0103888  Var NORMS:  0.010389
+RMS Time Errors 0.000000
+RMS Spatial Errors  2.153e-5
+
+CYCLE 5 TIME (0.206101,0.269047), DT=0.0629463, 642 NODES, 297 CELLS
+Orthomin/DInv ITERATION 96, RNORM=7.68708e-007, XNORM=0.246516, 0 MS/IT 0.0324507 uS/NODE
+EQSET 1 PASS 1 DNORM=0.00741853  Var NORMS:  0.007419
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.689e-5
+
+CYCLE 6 TIME (0.269047,0.339674), DT=0.0706269, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=2.59199e-007, XNORM=0.139509, 0 MS/IT 0.0614043 uS/NODE
+EQSET 1 PASS 1 DNORM=0.0032766  Var NORMS:  0.003277
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 7 TIME (0.339674,0.418919), DT=0.0792447, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 75, RNORM=5.19642e-011, XNORM=4.90713e-006, 0 MS/IT 0.0405268 uS/NODE
+EQSET 1 PASS 1 DNORM=4.97501e-008  Var NORMS:  4.975e-8
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 8 TIME (0.418919,0.507833), DT=0.088914, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 89, RNORM=6.24861e-015, XNORM=5.41807e-009, 0 MS/IT 0.0341518 uS/NODE
+EQSET 1 PASS 1 DNORM=3.67656e-011  Var NORMS:  3.68e-11
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 9 TIME (0.507833,0.607596), DT=0.0997631, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 67, RNORM=2.27283e-018, XNORM=1.4684e-013, 0 MS/IT 0.0226829 uS/NODE
+EQSET 1 PASS 1 DNORM=1.16088e-015  Var NORMS:  1.16e-15
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 10 TIME (0.607596,0.719532), DT=0.111936, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 88, RNORM=3.71281e-019, XNORM=3.2453e-014, 0 MS/IT 0.0345399 uS/NODE
+EQSET 1 PASS 1 DNORM=4.07755e-016  Var NORMS:  4.08e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 11 TIME (0.719532,0.845126), DT=0.125594, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=8.3091e-020, XNORM=2.38387e-014, 0 MS/IT 0.0474924 uS/NODE
+EQSET 1 PASS 1 DNORM=2.45751e-016  Var NORMS:  2.46e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 12 TIME (0.845126,0.986045), DT=0.140919, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 85, RNORM=2.0286e-019, XNORM=2.24009e-014, 0 MS/IT 0.035759 uS/NODE
+EQSET 1 PASS 1 DNORM=2.48651e-016  Var NORMS:  2.49e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 13 TIME (0.986045,1.14416), DT=0.158114, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=4.65862e-020, XNORM=2.45647e-014, 0 MS/IT 0.0307022 uS/NODE
+EQSET 1 PASS 1 DNORM=2.51734e-016  Var NORMS:  2.52e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 14 TIME (1.14416,1.32157), DT=0.177407, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 99, RNORM=2.97276e-020, XNORM=2.26693e-014, 0 MS/IT 0.0307022 uS/NODE
+EQSET 1 PASS 1 DNORM=2.36115e-016  Var NORMS:  2.36e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 15 TIME (1.32157,1.52062), DT=0.199054, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 92, RNORM=6.86175e-020, XNORM=2.2048e-014, 0 MS/IT 0.0330382 uS/NODE
+EQSET 1 PASS 1 DNORM=3.6142e-016  Var NORMS:  3.61e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 16 TIME (1.52062,1.74396), DT=0.223342, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 97, RNORM=9.41392e-020, XNORM=2.26816e-014, 0 MS/IT 0.0940056 uS/NODE
+EQSET 1 PASS 1 DNORM=2.51674e-016  Var NORMS:  2.52e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 17 TIME (1.74396,1.99455), DT=0.250594, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 97, RNORM=4.83328e-020, XNORM=2.70841e-014, 0 MS/IT 0.078338 uS/NODE
+EQSET 1 PASS 1 DNORM=3.03022e-016  Var NORMS:  3.03e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 18 TIME (1.99455,2.27573), DT=0.281171, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=1.33939e-019, XNORM=2.72278e-014, 0 MS/IT 0.0316616 uS/NODE
+EQSET 1 PASS 1 DNORM=2.81491e-016  Var NORMS:  2.81e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 19 TIME (2.27573,2.5912), DT=0.315479, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=1.30122e-019, XNORM=2.58675e-014, 0 MS/IT 0.0316616 uS/NODE
+EQSET 1 PASS 1 DNORM=2.9255e-016  Var NORMS:  2.93e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 20 TIME (2.5912,2.94518), DT=0.353973, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=4.8312e-020, XNORM=2.28945e-014, 0 MS/IT 0.0465232 uS/NODE
+EQSET 1 PASS 1 DNORM=2.29018e-016  Var NORMS:  2.29e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 21 TIME (2.94518,3.34234), DT=0.397164, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 87, RNORM=1.4416e-019, XNORM=2.52676e-014, 0 MS/IT 0.0349369 uS/NODE
+EQSET 1 PASS 1 DNORM=2.5059e-016  Var NORMS:  2.51e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 22 TIME (3.34234,3.78797), DT=0.445625, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=9.64092e-020, XNORM=2.66699e-014, 0 MS/IT 0.0310154 uS/NODE
+EQSET 1 PASS 1 DNORM=2.88011e-016  Var NORMS:  2.88e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 23 TIME (3.78797,4.28797), DT=0.5, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 96, RNORM=5.68258e-020, XNORM=2.71782e-014, 0 MS/IT 0.0316616 uS/NODE
+EQSET 1 PASS 1 DNORM=2.89746e-016  Var NORMS:  2.90e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 24 TIME (4.28797,4.84898), DT=0.561009, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 101, RNORM=5.81345e-020, XNORM=2.80501e-014, 0 MS/IT 0.0300942 uS/NODE
+EQSET 1 PASS 1 DNORM=3.79907e-016  Var NORMS:  3.80e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+
+CYCLE 25 TIME (4.84898,5), DT=0.151024, 658 NODES, 305 CELLS
+Orthomin/DInv ITERATION 98, RNORM=1.45801e-019, XNORM=2.74554e-014, 0 MS/IT 0.0155077 uS/NODE
+EQSET 1 PASS 1 DNORM=3.50919e-016  Var NORMS:  3.51e-16
+RMS Time Errors 0.000000
+RMS Spatial Errors  1.297e-5
+DO_NEXTSTAGE pde 033B1E20  MAXSTAGE=0
+
+================================================================
+===  FlexPDE Version 6.36s/W32  14:13:44 Jan  8 2015  © 1996-2014 PDE Solutions Inc.
+===  D:\Mis_Datos\A1_Educacion\B1_Universidad\C3_UNED\D1_Cuatrimestre_1\E4_MetodosDeSimulacionYModelado\Trabajo\BloquePino\src\bloquePino.pde 16:28:30 1/8/22
+================================================================
+    1| TITLE 'Bloque Pino' { Flujo de calor en un bloque Pino interior }
+    2| SELECT
+    3| errlim=1e-3 spectral_colors
+    4| VARIABLES temp
+    5| DEFINITIONS
+    6| Lx=0.1 Ly = 0.1 Cx = 0.01 Cy = 0.01 !Posiciones de
+    7| kx = 0.15 !Conductividad termica en X
+    8| ky = 0.36 !Conductividad termica en Y
+    9| fluxd_x = -kx*dx(temp) fluxd_y=-ky*dy(temp)
+   10| fluxd=vector(fluxd_x,fluxd_y)
+   11| INITIAL VALUES
+   12| temp = 273
+   13| EQUATIONS
+   14| dx( fluxd_x)+ dy( fluxd_y)=0
+   15| BOUNDARIES
+   16| region 'dominio' {Define el dominio del problema}
+   17| START (-Lx,Ly) NATURAL(temp) = 0
+   18| LINE TO (-Lx,-Ly) VALUE(temp) = 300
+   19| LINE TO (Lx, -Ly) NATURAL(temp) = 0
+   20| LINE TO (Lx, Ly) NATURAL(temp)= 0 LINE TO CLOSE
+   21| START(-Cx,Ly) LINE TO (Cx,Ly) {Region excluida}
+   22| VALUE(temp) =500 LINE TO CLOSE
+   23| 
+   24| PLOTS
+   25| 
+   26| CONTOUR(temp)
+   27| VECTOR(fluxd)
+   28| end
+   29| END
+
+SUMMARIZE 10 PARAMETERS (NO COMMON SUBEXPRESSION ELIMINATION)
+   Param         Compartment       Complexity     Memory
+--------------------------------------------------------------
+         ERRLIM      0                    1         56
+             LX      0                    1         56
+             LY      0                    1         56
+             CX      0                    1         56
+             CY      0                    1         56
+             KX      0                    1         56
+             KY      0                    1         56
+        FLUXD_X      0                    4        224
+        FLUXD_Y      0                    4        224
+          FLUXD      0                   10        560
+
+SUMMARIZE EQUATIONS
+
+                                                    BASE         CSE
+ EQUATION  COMPARTMENT              FUNCTION     COMPLEXITY  COMPLEXITY    MEMORY
+----------------------------------------------------------------------------------
+     1          1                     Source          1            2          112
+     1          1                   Galerkin          9            9          504
+     1          1       Var  1      Jacobian          9            9          504
+     1          1              Surf Galerkin         10           10          560
+     1          1       Var  1 Surf Jacobian         10            9          504
+
+EQUATION 1 PARAMETER DEPENDENCIES:
+ KX              KY              FLUXD_X         FLUXD_Y        
+
+SUMMARIZE BOUNDARY CONDITIONS
+
+    BC     COMPARTMENT              FUNCTION     COMPLEXITY    MEMORY
+----------------------------------------------------------------------
+     1          1              Surf Galerkin          1         56
+     1          1       Var  1 Surf Jacobian          1         56
+     2          1              Surf Galerkin          1         56
+     2          1       Var  1 Surf Jacobian          1         56
+     3          1              Surf Galerkin          1         56
+     3          1       Var  1 Surf Jacobian          1         56
+
+SUMMARIZE PLOT EQUATIONS
+
+                                     BASE        CSE
+   PLOT    ARGUMENT COMPARTMENT  COMPLEXITY  COMPLEXITY    MEMORY
+------------------------------------------------------------------
+     1          1          1          1          1           56
+     2          1          1         10         10          560
+
+==UNUSED== PARAMETER DEFINITIONS:
+ ERRLIM          CY             
+
+Orthomin/ILU ITERATION 32, RNORM=5.9484e-005, XNORM=45.9574, 0 MS/IT 0 uS/NODE
+Orthomin/ILU ITERATION 32, RNORM=9.06135e-010, XNORM=0.000339401, 0 MS/IT 0.0612745 uS/NODE
+RMS Spatial Errors  0.001685
+Orthomin/ILU ITERATION 36, RNORM=1.14677e-006, XNORM=1.15315, 0 MS/IT 0.0894614 uS/NODE
+Orthomin/ILU ITERATION 30, RNORM=2.05837e-011, XNORM=6.51262e-006, 0 MS/IT 0.0536769 uS/NODE
+RMS Spatial Errors  1.170e-4
+Orthomin/ILU ITERATION 42, RNORM=1.05846e-007, XNORM=0.561941, 0 MS/IT 0.0983865 uS/NODE
+Orthomin/ILU ITERATION 20, RNORM=8.38732e-011, XNORM=6.45829e-007, 0 MS/IT 0.137741 uS/NODE
+RMS Spatial Errors  2.126e-5
+Orthomin/ILU ITERATION 45, RNORM=3.82001e-008, XNORM=0.264706, 0 MS/IT 0.0288976 uS/NODE
+RMS Spatial Errors  8.636e-6
+DO_NEXTSTAGE pde 033B1E20  MAXSTAGE=0
